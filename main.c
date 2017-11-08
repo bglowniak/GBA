@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "library.h"
+#include "diddy.h"
 
 unsigned short *videoBuffer = (unsigned short *) 0x6000000;
 
@@ -11,7 +12,8 @@ void drawString(int row, int col, char str[], u16 color);
 
 int main() {
 	REG_DISPCTL = MODE3 | BG2_ENABLE;
-	int row = 80;
+	while(1);
+/*	int row = 80;
 	int col = 120;
 	int rdel = 0;
 	int cdel = 0;
@@ -80,7 +82,7 @@ int main() {
 			previousA = 0;
 		}
 	}
-
+*/
 }
 
 void setPixel(int row, int col, u16 color) {
