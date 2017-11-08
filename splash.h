@@ -1,7 +1,7 @@
 /*
  * Exported with nin10kit v1.7
  * Invocation command was nin10kit --mode=3 splash splash.png 
- * Time-stamp: Tuesday 11/07/2017, 19:57:06
+ * Time-stamp: Tuesday 11/07/2017, 22:08:41
  * 
  * Image Information
  * -----------------
