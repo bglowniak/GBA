@@ -1,7 +1,9 @@
 #define REG_DISPCTL *(unsigned short *) 0x4000000
 #define MODE3 3
 #define SCANLINECOUNTER *(volatile unsigned short *) 0x4000006
-#define SCREENHEIGHT 149
+#define SCREENHEIGHT 159
+#define SCREENWIDTH 239
+
 #define BG2_ENABLE (1 << 10)
 
 typedef unsigned int u32;
@@ -38,7 +40,6 @@ extern const unsigned char fontdata_6x8[12288];
 //Prototypes
 void waitForVblank();
 void delay(int n);
-void drawImage3(int r, int c, int width, int height, const u16* image);
 
 //DMA
 #define REG_DMA0SAD         *(volatile u32*) 0x40000B0 		// source address
