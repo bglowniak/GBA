@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "library.h"
+#include "myLib.h"
 #include "graphics.h"
 
 extern unsigned short *videoBuffer;
@@ -14,6 +14,7 @@ enum GBAState {
 int main() {
 	REG_DISPCTL = MODE3 | BG2_ENABLE;
 	enum GBAState state = START;
+	int startPressed = FALSE;
 	while(1) {
 		waitForVblank();
 		switch(state) {
@@ -22,20 +23,25 @@ int main() {
 				state = START_NODRAW;
 				break;
 			case START_NODRAW:
-				if (KEY_DOWN_NOW(BUTTON_SELECT)) {
+				if (!startPressed && KEY_DOWN_NOW(BUTTON_START)) {
 					state = GAME_OVER;
+					startPressed = TRUE;
 				}
 				break;
 			case GAME_OVER:
-				drawRect(0, 0, 160, 240, BLACK);
-				drawString(76, 90, "Game Over!", YELLOW);
+				drawGameOver();
 				state = GAME_OVER_NODRAW;
 				break;
 			case GAME_OVER_NODRAW:
-				if (KEY_DOWN_NOW(BUTTON_A)) {
+				if (!startPressed && KEY_DOWN_NOW(BUTTON_START)) {
 					state = START;
+					startPressed = TRUE;
 				}
 				break;
+		}
+
+		if (!KEY_DOWN_NOW(BUTTON_START)) {
+			startPressed = FALSE;
 		}
 	}
 }

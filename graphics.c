@@ -1,5 +1,5 @@
-#include "library.h"
-#include "splash.h"
+#include "myLib.h"
+#include "screens.h"
 
 extern unsigned short *videoBuffer;
 void drawImage3(int r, int c, int width, int height, const u16* image) {
@@ -41,4 +41,8 @@ void drawString(int row, int col, char str[], unsigned short color) {
 
 void drawSplashScreen() {
     drawImage3(0, 0, SPLASH_WIDTH, SPLASH_HEIGHT, splash);
+}
+
+void drawGameOver() {
+    drawImage3(0, 0, GAMEOVER_WIDTH, GAMEOVER_HEIGHT, gameOver);
 }

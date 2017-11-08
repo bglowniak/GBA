@@ -13,12 +13,12 @@ PROGNAME = CS2110-GBA-Project
 # that will be compiled into your program. For example
 # if you have main.c and myLib.c then in the following
 # line you would put main.o and myLib.o
-OFILES = main.o font.o library.o splash.o graphics.o characters.o
+OFILES = main.o font.o library.o screens.o graphics.o characters.o
 
 # The header files you have created.
 # This is necessary to determine when to recompile for files.
 # This should be a space (SPACE!) separated list of .h files
-HFILES = font.h main.h library.h splash.h graphics.h characters.h
+HFILES = font.h main.h library.h screens.h graphics.h characters.h
 
 ################################################################################
 # These are various settings used to make the GBA toolchain work
