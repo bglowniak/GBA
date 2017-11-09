@@ -6,9 +6,6 @@
 
 #define BG2_ENABLE (1 << 10)
 
-typedef unsigned int u32;
-typedef unsigned short u16;
-
 #define TRUE 1
 #define FALSE 0
 

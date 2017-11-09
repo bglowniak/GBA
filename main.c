@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "myLib.h"
 #include "graphics.h"
 #include "game.h"
@@ -15,21 +14,11 @@ enum GBAState {
 	GAME_OVER_NODRAW
 };
 
-typedef struct {
-	PLAYER* player;
-	LEVEL* currentLevel;
-} GameState;
-
 int main() {
 	REG_DISPCTL = MODE3 | BG2_ENABLE;
 
 	enum GBAState state = START;
-	LEVEL currentLevel;
-	PLAYER player;
-	GameState gameState = {
-		&player,
-		&currentLevel
-	};
+	GameState gameState;
 	int startPressed = FALSE;
 
 	while(1) {
@@ -41,7 +30,7 @@ int main() {
 				break;
 			case START_NODRAW:
 				if (!startPressed && KEY_DOWN_NOW(BUTTON_START)) {
-					state = GAME;
+					state = INIT;
 					startPressed = TRUE;
 				}
 				break;
@@ -49,8 +38,10 @@ int main() {
 				clearScreen();
 				LEVEL currentLevel = level_1;
 				PLAYER player = {currentLevel.playerStartX, currentLevel.playerStartY, 0};
-				(void) player;
-				(void) gameState;
+				gameState.player = &player;
+				gameState.currentLevel = &currentLevel;
+				drawImage3(0, 0, 240, 160, level_1.backgroundImage);
+				drawGame(&gameState);
 				state = GAME;
 				break;
 			case GAME:
