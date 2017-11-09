@@ -1,21 +1,29 @@
+//x represents column
+//y represents row
+
 typedef struct {
     int x;
     int y;
     int deaths;
 } PLAYER;
 
+enum Direction {
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
+};
+
 typedef struct {
-    int startX;
-    int startY;
-    int currentX;
-    int currentY;
-    int endX;
-    int endY;
+    int x;
+    int y;
+    int velocity;
+    enum Direction startD;
 } ENEMY;
 
 typedef struct {
-    u32 numEnemies;
-    u16 backgroundColor;
-    const u16* backgroundImage;
-    struct ENEMY* enemies;
+    const unsigned short* backgroundImage;
+    ENEMY* enemies;
+    int playerStartX;
+    int playerStartY;
 } LEVEL;
