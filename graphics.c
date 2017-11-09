@@ -1,5 +1,7 @@
 #include "myLib.h"
+#include "graphics.h"
 #include "screens.h"
+#include "characters.h"
 
 extern unsigned short *videoBuffer;
 void drawImage3(int r, int c, int width, int height, const u16* image) {
@@ -10,32 +12,32 @@ void drawImage3(int r, int c, int width, int height, const u16* image) {
 	}
 }
 
-void setPixel(int row, int col, u16 color) {
-	videoBuffer[OFFSET(row, col, 240)] = color;
+void setPixel(int r, int c, u16 color) {
+	videoBuffer[OFFSET(r, c, 240)] = color;
 }
 
-void drawRect(int row, int col, int height, int width, u16 color) {
-	for(int r = 0; r < height; r++) {
+void drawRect(int r, int c, int width, int height, u16 color) {
+	for(int row = 0; row < height; row++) {
 		DMA[3].src = &color;
-		DMA[3].dst = &videoBuffer[OFFSET(row + r, col, 240)];
+		DMA[3].dst = &videoBuffer[OFFSET(row + r, c, 240)];
 		DMA[3].cnt = (width) | DMA_ON | DMA_DESTINATION_INCREMENT | DMA_SOURCE_FIXED;
 	}
 }
 
-void drawChar(int row, int col, char ch, unsigned short color) {
-	for(int r=0; r< 8; r++) {
-		for(int c=0; c<6; c++) {
-			if (fontdata_6x8[OFFSET(r, c, 6) + ch*48] == 1)	{
-				setPixel(row+r, col+c, color);
+void drawChar(int r, int c, char ch, u16 color) {
+	for(int row = 0; row < 8; row++) {
+		for(int col = 0; col < 6; col++) {
+			if (fontdata_6x8[OFFSET(row, col, 6) + ch * 48] == 1)	{
+				setPixel(row + r, col + c, color);
 			}
 		}
 	}
 }
 
-void drawString(int row, int col, char str[], unsigned short color) {
+void drawString(int r, int c, char str[], u16 color) {
 	while(*str) {
-		drawChar(row, col, *str++, color);
-		col += 6;
+		drawChar(r, c, *str++, color);
+		c += 6;
 	}
 }
 
@@ -45,4 +47,24 @@ void drawSplashScreen() {
 
 void drawGameOver() {
     drawImage3(0, 0, GAMEOVER_WIDTH, GAMEOVER_HEIGHT, gameOver);
+}
+
+void clearScreen() {
+    drawRect(0, 0, WIDTH, HEIGHT, WHITE);
+}
+
+void drawSquareDude(int r, int c) {
+    drawImage3(r, c, PLAYER_SIZE, PLAYER_SIZE, square_dude);
+}
+
+void drawCircleEnemy(int r, int c) {
+    for (int row = 0; row < ENEMY_SIZE; row++) {
+        for (int col = 0; col < ENEMY_SIZE; col++) {
+            u32 pixel = circle_enemy[(OFFSET(row, col, ENEMY_SIZE))];
+            if (pixel != 0x2ffe) {
+                setPixel(row + r, col + c, pixel);
+            }
+        }
+    }
+    //drawImage3(r, c, ENEMY_SIZE, ENEMY_SIZE, circle_enemy);
 }

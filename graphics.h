@@ -1,8 +1,14 @@
+#define PLAYER_SIZE 8
+#define ENEMY_SIZE 8
+
 //Function Prototypes
 void drawImage3(int r, int c, int width, int height, const u16* image);
-void setPixel(int row, int col, u16 color);
-void drawRect(int row, int col, int height, int width, u16 color);
-void drawChar(int row, int col, char ch, unsigned short color);
-void drawString(int row, int col, char str[], unsigned short color);
+void setPixel(int r, int c, u16 color);
+void drawRect(int r, int c, int width, int height, u16 color);
+void drawChar(int r, int c, char ch, u16 color);
+void drawString(int r, int c, char str[], u16 color);
 void drawSplashScreen();
 void drawGameOver();
+void clearScreen();
+void drawSquareDude(int r, int c);
+void drawCircleEnemy(int r, int c);

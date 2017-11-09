@@ -1,8 +1,8 @@
 #define REG_DISPCTL *(unsigned short *) 0x4000000
 #define MODE3 3
 #define SCANLINECOUNTER *(volatile unsigned short *) 0x4000006
-#define SCREENHEIGHT 159
-#define SCREENWIDTH 239
+#define HEIGHT 160
+#define WIDTH 240
 
 #define BG2_ENABLE (1 << 10)
 
