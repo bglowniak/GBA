@@ -9,6 +9,9 @@
 #define TRUE 1
 #define FALSE 0
 
+#define PLAYER_SIZE 8
+#define ENEMY_SIZE 8
+
 //Colors
 #define COLOR(r, g, b) ((r) | (g) << 5 | (b) << 10)
 #define RED COLOR(31, 0, 0)

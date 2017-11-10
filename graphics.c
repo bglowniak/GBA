@@ -16,6 +16,10 @@ void setPixel(int r, int c, unsigned short color) {
 	videoBuffer[OFFSET(r, c, 240)] = color;
 }
 
+unsigned short checkPixel(int r, int c) {
+    return videoBuffer[OFFSET(r, c, 240)];
+}
+
 void drawRect(int r, int c, int width, int height, unsigned short color) {
 	for(int row = 0; row < height; row++) {
 		DMA[3].src = &color;

@@ -8,7 +8,7 @@ extern LEVEL level_1;
 enum GBAState {
 	START,
 	START_NODRAW,
-	INIT,
+	INIT_LEVEL,
 	GAME,
 	GAME_OVER,
 	GAME_OVER_NODRAW
@@ -20,6 +20,8 @@ int main() {
 	enum GBAState state = START;
 	GameState gameState;
 	int startPressed = FALSE;
+	LEVEL currentLevel;
+	PLAYER player = {0, 0, 0};
 
 	while(1) {
 		waitForVblank();
@@ -30,21 +32,25 @@ int main() {
 				break;
 			case START_NODRAW:
 				if (!startPressed && KEY_DOWN_NOW(BUTTON_START)) {
-					state = INIT;
+					state = INIT_LEVEL;
+					currentLevel = level_1;
+					player.deaths = 0;
 					startPressed = TRUE;
 				}
 				break;
-			case INIT:
+			case INIT_LEVEL:
 				clearScreen();
-				LEVEL currentLevel = level_1;
-				PLAYER player = {currentLevel.playerStartX, currentLevel.playerStartY, 0};
+				player.x = currentLevel.playerStartX;
+				player.y = currentLevel.playerStartY;
 				gameState.player = &player;
 				gameState.currentLevel = &currentLevel;
-				drawImage3(0, 0, 240, 160, level_1.backgroundImage);
+				drawImage3(0, 0, 240, 160, currentLevel.backgroundImage);
 				drawGame(&gameState);
 				state = GAME;
 				break;
 			case GAME:
+				processGame(&gameState);
+				drawGame(&gameState);
 				if (KEY_DOWN_NOW(BUTTON_SELECT)) {
 					state = START;
 				}

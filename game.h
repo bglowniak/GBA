@@ -17,7 +17,7 @@ typedef struct {
     int x;
     int y;
     int velocity;
-    enum Direction startD;
+    enum Direction direction;
 } ENEMY;
 
 typedef struct {
@@ -34,5 +34,10 @@ typedef struct {
 } GameState;
 
 void drawGame(GameState* pointer);
+void processGame(GameState* state);
+int movePlayer(PLAYER* player, int* xdel, int* ydel);
+void moveEnemy(ENEMY* enemy);
 extern void drawSquareDude(int r, int c);
 extern void drawCircleEnemy(int r, int c);
+extern void drawRect(int r, int c, int width, int height, unsigned short color);
+extern unsigned short checkPixel(int r, int c);
