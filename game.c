@@ -72,18 +72,61 @@ int movePlayer(PLAYER* player, int* xdel, int* ydel) {
 }
 
 void moveEnemy(ENEMY* enemy) {
-    int y = enemy->y;
-    (void) y;
+    int leftX = enemy->x;
+    int rightX = enemy->x + ENEMY_SIZE - 1;
+    int topY = enemy->y;
+    int bottomY = enemy->y + ENEMY_SIZE - 1;
+    int xdel = 0;
+    int ydel = 0;
+    int vel = enemy->velocity;
+    switch(enemy->direction) {
+        case UP:
+            if (checkPixel(topY - 1, leftX) == BLACK || checkPixel(topY - 1, rightX) == BLACK) {
+                enemy->direction = DOWN;
+                ydel = vel;
+            } else {
+                ydel = -vel;
+            }
+            break;
+        case DOWN:
+            if (checkPixel(bottomY + 1, leftX) == BLACK || checkPixel(bottomY + 1, rightX) == BLACK) {
+                enemy->direction = UP;
+                ydel = -vel;
+            } else {
+                ydel = vel;
+            }
+            break;
+        case RIGHT:
+            if (checkPixel(topY, rightX + 1) == BLACK || checkPixel(bottomY, rightX + 1) == BLACK) {
+                enemy->direction = LEFT;
+                xdel = -vel;
+            } else {
+                xdel = vel;
+            }
+            break;
+        case LEFT:
+            if (checkPixel(topY, leftX - 1) == BLACK || checkPixel(bottomY, leftX - 1) == BLACK) {
+                enemy->direction = RIGHT;
+                xdel = vel;
+            } else {
+                xdel = -vel;
+            }
+            break;
+    }
+
+    enemy->x = leftX + xdel;
+    enemy->y = topY + ydel;
+    drawRect(topY, leftX, ENEMY_SIZE, ENEMY_SIZE, WHITE);
 }
 
 ENEMY level1E[] = {
     {65, 28, 1, UP},
-    {45, 46, 1, RIGHT},
-    {188, 61, -1, LEFT},
-    {45, 76, 1, RIGHT},
-    {188, 91, -1, LEFT},
-    {45, 106, 1, RIGHT},
-    {146, 125, -1, DOWN}
+    {45, 46, 2, RIGHT},
+    {187, 61, 2, LEFT},
+    {45, 76, 2, RIGHT},
+    {187, 91, 2, LEFT},
+    {45, 106, 2, RIGHT},
+    {146, 125, 1, DOWN}
 };
 
 LEVEL level_1 = {level1, 7, level1E, 14, 14};
