@@ -35,10 +35,11 @@ typedef struct {
 } GameState;
 
 void drawGame(GameState* pointer);
-void processGame(GameState* state);
+void processMovements(GameState* state);
 int movePlayer(PLAYER* player, int* xdel, int* ydel);
 void moveEnemy(ENEMY* enemy);
 int checkVictory(GameState* state);
+int checkDeath(GameState* state);
 extern void drawSquareDude(int r, int c);
 extern void drawCircleEnemy(int r, int c);
 extern void drawRect(int r, int c, int width, int height, unsigned short color);

@@ -49,8 +49,14 @@ int main() {
 				state = GAME;
 				break;
 			case GAME:
-				processGame(&gameState);
+				processMovements(&gameState);
 				drawGame(&gameState);
+				if (checkDeath(&gameState)) {
+					gameState.player->x = currentLevel.playerStartX;
+					gameState.player->y = currentLevel.playerStartY;
+					gameState.player->deaths++;
+					drawGame(&gameState);
+				}
 				if (checkVictory(&gameState)) {
 					state = GAME_OVER;
 				}

@@ -16,7 +16,7 @@ void drawGame(GameState* state) {
     }
 }
 
-void processGame(GameState* state) {
+void processMovements(GameState* state) {
     PLAYER* player = state->player;
     ENEMY* enemies = state->currentLevel->enemies;
     for (int i = 0; i < state->currentLevel->numEnemies; i++) {
@@ -123,6 +123,29 @@ int checkVictory(GameState* state) {
     int x = state->player->x;
     int y = state->player->y;
     return (checkPixel(y, x + 8) == 0x2f46);
+}
+
+int checkDeath(GameState* state) {
+    int playerX1 = state->player->x;
+    int playerX2 = state->player->x + PLAYER_SIZE - 1;
+    int playerY1 = state->player->y;
+    int playerY2 = state->player->y + PLAYER_SIZE - 1;
+    int hasCollided = 0;
+    int index = 0;
+    ENEMY* enemies = state->currentLevel->enemies;
+    while (index < state->currentLevel->numEnemies && !hasCollided) {
+        ENEMY current = *(enemies + index++);
+        int enemyX1 = current.x;
+        int enemyX2 = current.x + ENEMY_SIZE - 1;
+        int enemyY1 = current.y;
+        int enemyY2 = current.y + ENEMY_SIZE - 1;
+
+        hasCollided = (playerX1 <= enemyX2 + 1) && (playerX2 >= enemyX1 + 1) && (playerY1 <= enemyY2 + 1) && (playerY2 >= enemyY1 + 1);
+    }
+    if (hasCollided) {
+        drawRect(playerY1, playerX1, PLAYER_SIZE, PLAYER_SIZE, WHITE);
+    }
+    return hasCollided;
 }
 
 ENEMY level1E[] = {
