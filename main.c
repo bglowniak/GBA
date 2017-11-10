@@ -3,7 +3,7 @@
 #include "game.h"
 
 extern unsigned short *videoBuffer;
-extern LEVEL level_1;
+extern LEVEL levels[];
 
 enum GBAState {
 	START,
@@ -33,7 +33,7 @@ int main() {
 			case START_NODRAW:
 				if (!startPressed && KEY_DOWN_NOW(BUTTON_START)) {
 					state = INIT_LEVEL;
-					currentLevel = level_1;
+					currentLevel = levels[0];
 					player.deaths = 0;
 					startPressed = TRUE;
 				}
@@ -51,10 +51,17 @@ int main() {
 			case GAME:
 				processGame(&gameState);
 				drawGame(&gameState);
+				if (checkVictory(&gameState)) {
+					state = GAME_OVER;
+				}
 				if (KEY_DOWN_NOW(BUTTON_SELECT)) {
 					state = START;
 				}
 				break;
+			//case NEXT_LEVEL:
+				//currentLevel = levels[currentLevel.levelID];
+				//state = INIT_LEVEL;
+				//break;
 			case GAME_OVER:
 				drawGameOver();
 				state = GAME_OVER_NODRAW;

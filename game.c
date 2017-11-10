@@ -119,6 +119,12 @@ void moveEnemy(ENEMY* enemy) {
     drawRect(topY, leftX, ENEMY_SIZE, ENEMY_SIZE, WHITE);
 }
 
+int checkVictory(GameState* state) {
+    int x = state->player->x;
+    int y = state->player->y;
+    return (checkPixel(y, x + 8) == 0x2f46);
+}
+
 ENEMY level1E[] = {
     {65, 28, 1, UP},
     {45, 46, 2, RIGHT},
@@ -129,4 +135,6 @@ ENEMY level1E[] = {
     {146, 125, 1, DOWN}
 };
 
-LEVEL level_1 = {level1, 7, level1E, 14, 14};
+LEVEL levels[] = {
+    {level1, 7, level1E, 14, 14, 1}
+};
