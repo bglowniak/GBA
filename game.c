@@ -1,8 +1,10 @@
-#include "level1.h"
+#include "levels.h"
 #include "game.h"
 #include "myLib.h"
+#include <stdio.h>
 
 extern unsigned short *videoBuffer;
+char deathBuffer[12];
 
 void drawGame(GameState* state) {
     PLAYER player = *(state->player);
@@ -10,10 +12,14 @@ void drawGame(GameState* state) {
 
     LEVEL level = *(state->currentLevel);
     ENEMY* enemies = level.enemies;
-    for (int i = 0; i <= level.numEnemies; i++) {
+    for (int i = 0; i < level.numEnemies; i++) {
         ENEMY enemy = *(enemies + i);
         drawCircleEnemy(enemy.y, enemy.x);
     }
+
+    //drawRect(146, 120, 120, 14, BLACK);
+    //sprintf(deathBuffer, "Deaths: %d", player.deaths);
+    //drawString(149, 170, deathBuffer, WHITE);
 }
 
 void processMovements(GameState* state) {
@@ -122,7 +128,9 @@ void moveEnemy(ENEMY* enemy) {
 int checkVictory(GameState* state) {
     int x = state->player->x;
     int y = state->player->y;
-    return (checkPixel(y, x + 8) == 0x2f46);
+    unsigned short vCol = 0x2f46;
+    return (checkPixel(y, x + PLAYER_SIZE) == vCol || checkPixel(y + PLAYER_SIZE, x) == vCol
+                || checkPixel(y - 1, x) == vCol || checkPixel(y, x - 1) == vCol);
 }
 
 int checkDeath(GameState* state) {
@@ -140,7 +148,7 @@ int checkDeath(GameState* state) {
         int enemyY1 = current.y;
         int enemyY2 = current.y + ENEMY_SIZE - 1;
 
-        hasCollided = (playerX1 <= enemyX2 + 1) && (playerX2 >= enemyX1 + 1) && (playerY1 <= enemyY2 + 1) && (playerY2 >= enemyY1 + 1);
+        hasCollided = (playerX1 <= enemyX2) && (playerX2 >= enemyX1) && (playerY1 <= enemyY2) && (playerY2 >= enemyY1);
     }
     if (hasCollided) {
         drawRect(playerY1, playerX1, PLAYER_SIZE, PLAYER_SIZE, WHITE);
@@ -149,15 +157,20 @@ int checkDeath(GameState* state) {
 }
 
 ENEMY level1E[] = {
-    {65, 28, 1, UP},
-    {45, 46, 2, RIGHT},
-    {187, 61, 2, LEFT},
+    {69, 26, 1, UP},
+    {45, 48, 2, RIGHT},
+    {187, 62, 2, LEFT},
     {45, 76, 2, RIGHT},
-    {187, 91, 2, LEFT},
-    {45, 106, 2, RIGHT},
-    {146, 125, 1, DOWN}
+    {187, 90, 2, LEFT},
+    {146, 113, 1, DOWN}
 };
 
+ENEMY level2E[] = {
+    {206, 69, 2, LEFT}
+};
+
+int numLevels = 2;
 LEVEL levels[] = {
-    {level1, 7, level1E, 14, 14, 1}
+    {level1, 6, level1E, 14, 14, 1},
+    {level2, 1, level2E, 26, 57, 2}
 };

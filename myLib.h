@@ -63,8 +63,7 @@ void delay(int n);
 #define REG_DMA3DAD         *(volatile u32*) 0x40000D8       // destination address
 #define REG_DMA3CNT         *(volatile u32*) 0x40000DC       // control register
 
-typedef struct
-{
+typedef struct {
 	const volatile void *src;
 	volatile void *dst;
 	unsigned int cnt;
