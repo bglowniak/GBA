@@ -1,13 +1,13 @@
 /*
  * Exported with nin10kit v1.7
- * Invocation command was nin10kit --mode=3 characters square_dude.png circle_enemy.png 
+ * Invocation command was nin10kit --mode=3 characters square_dude.png circle_enemy.png
  * Time-stamp: Saturday 11/11/2017, 11:27:10
- * 
+ *
  * Image Information
  * -----------------
  * square_dude.png 8@8
  * circle_enemy.png 8@8
- * 
+ *
  * All bug reports / feature requests are to be filed here https://github.com/TricksterGuy/nin10kit/issues
  */
 
@@ -28,4 +28,3 @@ const unsigned short circle_enemy[64] =
 	0x0400,0x5804,0x5c04,0x5c04,0x5c04,0x5c04,0x5804,0x0400,0x0400,0x3402,0x5c04,0x5c04,0x5c04,0x5c04,0x3402,0x19ee,
 	0x2ffe,0x1108,0x3802,0x5804,0x5804,0x3802,0x0400,0x2ffe,0x2ffe,0x2ffe,0x0400,0x0400,0x0400,0x08a4,0x2ffe,0x2ffe
 };
-

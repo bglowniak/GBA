@@ -6,6 +6,9 @@
 
 #define BG2_ENABLE (1 << 10)
 
+typedef unsigned short u16;
+typedef unsigned int u32;
+
 #define TRUE 1
 #define FALSE 0
 
@@ -41,7 +44,6 @@ extern const unsigned char fontdata_6x8[12288];
 
 //Prototypes
 void waitForVblank();
-void delay(int n);
 
 //DMA
 #define REG_DMA0SAD         *(volatile u32*) 0x40000B0 		// source address

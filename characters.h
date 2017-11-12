@@ -1,13 +1,13 @@
 /*
  * Exported with nin10kit v1.7
- * Invocation command was nin10kit --mode=3 characters square_dude.png circle_enemy.png 
+ * Invocation command was nin10kit --mode=3 characters square_dude.png circle_enemy.png
  * Time-stamp: Saturday 11/11/2017, 11:27:10
- * 
+ *
  * Image Information
  * -----------------
  * square_dude.png 8@8
  * circle_enemy.png 8@8
- * 
+ *
  * All bug reports / feature requests are to be filed here https://github.com/TricksterGuy/nin10kit/issues
  */
 
@@ -27,4 +27,3 @@ extern const unsigned short circle_enemy[64];
 #define CIRCLE_ENEMY_HEIGHT 8
 
 #endif
-

@@ -1,14 +1,14 @@
 /*
  * Exported with nin10kit v1.7
- * Invocation command was nin10kit --mode=3 levels level1.png level2.png level3.png 
+ * Invocation command was nin10kit --mode=3 levels level1.png level2.png level3.png
  * Time-stamp: Saturday 11/11/2017, 15:57:51
- * 
+ *
  * Image Information
  * -----------------
  * level1.png 240@160
  * level2.png 240@160
  * level3.png 240@160
- * 
+ *
  * All bug reports / feature requests are to be filed here https://github.com/TricksterGuy/nin10kit/issues
  */
 
@@ -7225,4 +7225,3 @@ const unsigned short level3[38400] =
 	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,
 	0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000
 };
-

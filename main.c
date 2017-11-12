@@ -3,10 +3,9 @@
 #include "game.h"
 #include <stdio.h>
 
-extern unsigned short *videoBuffer;
+extern u16 *videoBuffer;
 extern LEVEL levels[];
 extern int numLevels;
-char levelBuffer[12];
 
 enum GBAState {
 	START,
@@ -26,6 +25,9 @@ int main() {
 	int startPressed = FALSE;
 	LEVEL currentLevel;
 	PLAYER player = {0, 0, 0};
+
+	u32 color = WHITE;
+	char buffer[12];
 
 	while(1) {
 		waitForVblank();
@@ -50,8 +52,11 @@ int main() {
 				gameState.currentLevel = &currentLevel;
 
 				drawImage3(0, 0, 240, 160, currentLevel.backgroundImage);
-				sprintf(levelBuffer, "Level %d", currentLevel.levelID);
-				drawString(149, 10, levelBuffer, WHITE);
+				sprintf(buffer, "Level %d", currentLevel.levelID);
+				drawString(149, 10, buffer, WHITE);
+				drawRect(146, 120, 120, 14, BLACK);
+				sprintf(buffer, "Deaths: %d", player.deaths);
+				drawString(149, 170, buffer, color);
 				drawGame(&gameState);
 				state = GAME;
 				break;
@@ -62,7 +67,23 @@ int main() {
 					gameState.player->x = currentLevel.playerStartX;
 					gameState.player->y = currentLevel.playerStartY;
 					gameState.player->deaths++;
-					drawGame(&gameState);
+					int deaths = gameState.player->deaths;
+					if (deaths >= 20) {
+						state = GAME_OVER;
+					} else {
+						drawGame(&gameState);
+						drawRect(146, 120, 120, 14, BLACK);
+				    	sprintf(buffer, "Deaths: %d", deaths);
+				    	unsigned int color;
+				    	if (deaths >= 19) {
+				        	color = RED;
+				    	} else if (deaths >= 10) {
+				        	color = YELLOW;
+				    	} else {
+							color = WHITE;
+						}
+				    	drawString(149, 170, buffer, color);
+					}
 				}
 				if (checkVictory(&gameState)) {
 					state = NEXT_LEVEL;

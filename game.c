@@ -3,8 +3,7 @@
 #include "myLib.h"
 #include <stdio.h>
 
-extern unsigned short *videoBuffer;
-char deathBuffer[12];
+extern u16 *videoBuffer;
 
 void drawGame(GameState* state) {
     PLAYER player = *(state->player);
@@ -16,10 +15,6 @@ void drawGame(GameState* state) {
         ENEMY enemy = *(enemies + i);
         drawCircleEnemy(enemy.y, enemy.x);
     }
-
-    //drawRect(146, 120, 120, 14, BLACK);
-    //sprintf(deathBuffer, "Deaths: %d", player.deaths);
-    //drawString(149, 170, deathBuffer, WHITE);
 }
 
 void processMovements(GameState* state) {
@@ -128,7 +123,7 @@ void moveEnemy(ENEMY* enemy) {
 int checkVictory(GameState* state) {
     int x = state->player->x;
     int y = state->player->y;
-    unsigned short vCol = 0x2f46;
+    u16 vCol = 0x2f46;
     return (checkPixel(y, x + PLAYER_SIZE) == vCol || checkPixel(y + PLAYER_SIZE, x) == vCol
                 || checkPixel(y - 1, x) == vCol || checkPixel(y, x - 1) == vCol);
 }

@@ -1,10 +1,10 @@
 //Function Prototypes
-void drawImage3(int r, int c, int width, int height, const unsigned short* image);
-void setPixel(int r, int c, unsigned short color);
-unsigned short checkPixel(int r, int c);
-void drawRect(int r, int c, int width, int height, unsigned short color);
-void drawChar(int r, int c, char ch, unsigned short color);
-void drawString(int r, int c, char str[], unsigned short color);
+void drawImage3(int r, int c, int width, int height, const u16* image);
+void setPixel(int r, int c, u16 color);
+u16 checkPixel(int r, int c);
+void drawRect(int r, int c, int width, int height, u16 color);
+void drawChar(int r, int c, char ch, u16 color);
+void drawString(int r, int c, char str[], u16 color);
 void drawSplashScreen();
 void drawGameOver();
 void clearScreen();
