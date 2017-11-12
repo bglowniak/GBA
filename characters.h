@@ -1,7 +1,7 @@
 /*
  * Exported with nin10kit v1.7
  * Invocation command was nin10kit --mode=3 characters square_dude.png circle_enemy.png triangle_pickup.png 
- * Time-stamp: Sunday 11/12/2017, 09:54:53
+ * Time-stamp: Sunday 11/12/2017, 11:19:14
  * 
  * Image Information
  * -----------------

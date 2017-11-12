@@ -177,6 +177,7 @@ int checkDeath(GameState* state) {
     }
     if (hasCollided) {
         drawRect(playerY1, playerX1, PLAYER_SIZE, PLAYER_SIZE, WHITE);
+        state->player->pickupCollected = !state->currentLevel->hasPickup;
     }
     return hasCollided;
 }
@@ -215,9 +216,18 @@ ENEMY level3E[] = {
     {177, 93, 1, LEFT}
 };
 
-int numLevels = 3;
+ENEMY level4E[] = {
+    {29, 127, 2, UP},
+    //{26, 40, 2, RIGHT},
+    //{203, 37, 2, DOWN},
+    //{206, 124, 2, LEFT},
+    //{97, 99, 1, RIGHT}
+};
+
+int numLevels = 4;
 LEVEL levels[] = {
     {level1, 6, level1E, 0, {0, 0}, 14, 14, 1},
     {level2, 1, level2E, 0, {0, 0}, 26, 57, 2},
-    {level3, 8, level3E, 0, {0, 0}, 102, 28, 3}
+    {level3, 8, level3E, 0, {0, 0}, 102, 28, 3},
+    {level4, 0, level4E, 1, {116, 17}, 116, 71, 4}
 };
