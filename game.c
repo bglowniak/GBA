@@ -63,12 +63,15 @@ int movePlayer(PLAYER* player, int* xdpointer, int* ydpointer) {
 
     int xdel = *xdpointer;
     int ydel = *ydpointer;
+
+    int freeMovement = 1;
     //top
     if (ydel == -1) {
         u16 topLeft = checkPixel(topY + ydel, leftX);
         u16 topRight = checkPixel(topY + ydel, rightX);
         if (topLeft == BLACK || topLeft == vCol || topRight == BLACK || topRight == vCol) {
             *ydpointer = 0;
+            freeMovement = 0;
         }
     }
     //bottom
@@ -77,6 +80,7 @@ int movePlayer(PLAYER* player, int* xdpointer, int* ydpointer) {
         u16 bottomRight = checkPixel(bottomY + ydel, rightX);
         if (bottomLeft == BLACK || bottomLeft == vCol || bottomRight == BLACK || bottomRight == vCol) {
             *ydpointer = 0;
+            freeMovement = 0;
         }
     }
     //left
@@ -85,6 +89,7 @@ int movePlayer(PLAYER* player, int* xdpointer, int* ydpointer) {
         u16 leftBottom = checkPixel(bottomY, leftX + xdel);
         if (leftTop == BLACK || leftTop == vCol || leftBottom == BLACK || leftBottom == vCol) {
             *xdpointer = 0;
+            freeMovement = 0;
         }
     }
     //right
@@ -93,8 +98,28 @@ int movePlayer(PLAYER* player, int* xdpointer, int* ydpointer) {
         u16 rightBottom = checkPixel(bottomY, rightX + xdel);
         if (rightTop == BLACK || rightTop == vCol || rightBottom == BLACK || rightBottom == vCol) {
             *xdpointer = 0;
+            freeMovement = 0;
         }
     }
+
+    if (freeMovement && ydel != 0 && xdel != 0) {
+        u16 diagonal;
+        if (xdel == -1 && ydel == -1) {
+            diagonal = checkPixel(topY + ydel, leftX + xdel);
+        } else if (xdel == 1 && ydel == -1) {
+            diagonal = checkPixel(topY + ydel, rightX + xdel);
+        } else if (xdel == -1 && ydel == 1) {
+            diagonal = checkPixel(bottomY + ydel, leftX + xdel);
+        } else {
+            diagonal = checkPixel(bottomY + ydel, rightX + xdel);
+        }
+
+        if (diagonal == BLACK) {
+            *xdpointer = 0;
+            *ydpointer = 0;
+        }
+    }
+
     player->x = player->x + *xdpointer;
     player->y = player->y + *ydpointer;
     return ((*xdpointer != 0) || (*ydpointer != 0));
@@ -218,10 +243,10 @@ ENEMY level3E[] = {
 
 ENEMY level4E[] = {
     {29, 127, 2, UP},
-    //{26, 40, 2, RIGHT},
-    //{203, 37, 2, DOWN},
-    //{206, 124, 2, LEFT},
-    //{97, 99, 1, RIGHT}
+    {26, 40, 2, RIGHT},
+    {203, 127, 2, UP},  //37 down
+    {206, 124, 2, LEFT},
+    {97, 99, 1, RIGHT}
 };
 
 int numLevels = 4;
