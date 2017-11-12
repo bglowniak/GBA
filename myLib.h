@@ -14,6 +14,7 @@ typedef unsigned int u32;
 
 #define PLAYER_SIZE 8
 #define ENEMY_SIZE 8
+#define PICKUP_SIZE 8
 
 //Colors
 #define COLOR(r, g, b) ((r) | (g) << 5 | (b) << 10)

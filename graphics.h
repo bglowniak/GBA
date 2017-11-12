@@ -10,3 +10,4 @@ void drawGameOver();
 void clearScreen();
 void drawSquareDude(int r, int c);
 void drawCircleEnemy(int r, int c);
+void drawTrianglePickup(int r, int c);

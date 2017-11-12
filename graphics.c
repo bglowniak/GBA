@@ -73,3 +73,14 @@ void drawCircleEnemy(int r, int c) {
     }
     //drawImage3(r, c, ENEMY_SIZE, ENEMY_SIZE, circle_enemy);
 }
+
+void drawTrianglePickup(int r, int c) {
+    for (int row = 0; row < PICKUP_SIZE; row++) {
+        for (int col = 0; col < PICKUP_SIZE; col++) {
+            unsigned int pixel = triangle_pickup[(OFFSET(row, col, PICKUP_SIZE))];
+            if (pixel != 0x2ffe) {
+                setPixel(row + r, col + c, pixel);
+            }
+        }
+    }
+}

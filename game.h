@@ -4,6 +4,7 @@ typedef struct {
     int x;
     int y;
     int deaths;
+    int pickupCollected;
 } PLAYER;
 
 enum Direction {
@@ -21,9 +22,16 @@ typedef struct {
 } ENEMY;
 
 typedef struct {
+    int x;
+    int y;
+} PICKUP;
+
+typedef struct {
     const unsigned short* backgroundImage;
     int numEnemies;
     ENEMY* enemies;
+    int hasPickup;
+    PICKUP pickup;
     int playerStartX;
     int playerStartY;
     int levelID;
@@ -36,12 +44,14 @@ typedef struct {
 
 void drawGame(GameState* pointer);
 void processMovements(GameState* state);
-int movePlayer(PLAYER* player, int* xdel, int* ydel);
+int movePlayer(PLAYER* player, int* xdpointer, int* ydpointer);
 void moveEnemy(ENEMY* enemy);
 int checkVictory(GameState* state);
 int checkDeath(GameState* state);
+int checkPickupCollision(PLAYER* player, int pickupX1, int pickupY1);
 extern void drawSquareDude(int r, int c);
 extern void drawCircleEnemy(int r, int c);
 extern void drawRect(int r, int c, int width, int height, unsigned short color);
 extern void drawString(int r, int c, char str[], unsigned short color);
 extern unsigned short checkPixel(int r, int c);
+extern void drawTrianglePickup(int r, int c);

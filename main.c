@@ -24,7 +24,7 @@ int main() {
 	GameState gameState;
 	int startPressed = FALSE;
 	LEVEL currentLevel;
-	PLAYER player = {0, 0, 0};
+	PLAYER player = {0, 0, 0, 0};
 
 	u32 color = WHITE;
 	char buffer[12];
@@ -48,6 +48,7 @@ int main() {
 				clearScreen();
 				player.x = currentLevel.playerStartX;
 				player.y = currentLevel.playerStartY;
+				player.pickupCollected = !currentLevel.hasPickup;
 				gameState.player = &player;
 				gameState.currentLevel = &currentLevel;
 

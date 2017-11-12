@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 extern u16 *videoBuffer;
+u16 vCol = 0x2f46; //the color that represents the victory zone
 
 void drawGame(GameState* state) {
     PLAYER player = *(state->player);
@@ -14,6 +15,10 @@ void drawGame(GameState* state) {
     for (int i = 0; i < level.numEnemies; i++) {
         ENEMY enemy = *(enemies + i);
         drawCircleEnemy(enemy.y, enemy.x);
+    }
+
+    if (!player.pickupCollected) {
+        drawTrianglePickup(level.pickup.y, level.pickup.x);
     }
 }
 
@@ -41,35 +46,58 @@ void processMovements(GameState* state) {
     if (movePlayer(player, &xdel, &ydel)) {
         drawRect(player->y - ydel, player->x - xdel, PLAYER_SIZE, PLAYER_SIZE, WHITE);
     }
+
+    if (!player->pickupCollected && checkPickupCollision(player, state->currentLevel->pickup.x, state->currentLevel->pickup.y)) {
+        drawRect(state->currentLevel->pickup.y, state->currentLevel->pickup.x, PICKUP_SIZE, PICKUP_SIZE, WHITE);
+        player->pickupCollected = 1;
+    }
     state->player = player;
     state->currentLevel->enemies = enemies;
 }
 
-int movePlayer(PLAYER* player, int* xdel, int* ydel) {
+int movePlayer(PLAYER* player, int* xdpointer, int* ydpointer) {
     int leftX = player->x;
     int rightX = player->x + PLAYER_SIZE - 1;
     int topY = player->y;
     int bottomY = player->y + PLAYER_SIZE - 1;
-    //top
-    if ((*ydel == -1) && (checkPixel(topY + *ydel, leftX) == BLACK || checkPixel(topY + *ydel, rightX) == BLACK)) {
-        *ydel = 0;
-    }
 
+    int xdel = *xdpointer;
+    int ydel = *ydpointer;
+    //top
+    if (ydel == -1) {
+        u16 topLeft = checkPixel(topY + ydel, leftX);
+        u16 topRight = checkPixel(topY + ydel, rightX);
+        if (topLeft == BLACK || topLeft == vCol || topRight == BLACK || topRight == vCol) {
+            *ydpointer = 0;
+        }
+    }
     //bottom
-    if ((*ydel == 1) && (checkPixel(bottomY + *ydel, leftX) == BLACK || checkPixel(bottomY + *ydel, rightX) == BLACK)) {
-        *ydel = 0;
+    if (ydel == 1) {
+        u16 bottomLeft = checkPixel(bottomY + ydel, leftX);
+        u16 bottomRight = checkPixel(bottomY + ydel, rightX);
+        if (bottomLeft == BLACK || bottomLeft == vCol || bottomRight == BLACK || bottomRight == vCol) {
+            *ydpointer = 0;
+        }
     }
     //left
-    if ((*xdel == -1) && (checkPixel(topY, leftX + *xdel) == BLACK || checkPixel(bottomY, leftX + *xdel) == BLACK)) {
-        *xdel = 0;
+    if (xdel == -1) {
+        u16 leftTop = checkPixel(topY, leftX + xdel);
+        u16 leftBottom = checkPixel(bottomY, leftX + xdel);
+        if (leftTop == BLACK || leftTop == vCol || leftBottom == BLACK || leftBottom == vCol) {
+            *xdpointer = 0;
+        }
     }
     //right
-    if ((*xdel == 1) && (checkPixel(topY, rightX + *xdel) == BLACK || checkPixel(bottomY, rightX + *xdel) == BLACK)) {
-        *xdel = 0;
+    if (xdel == 1) {
+        u16 rightTop = checkPixel(topY, rightX + xdel);
+        u16 rightBottom = checkPixel(bottomY, rightX + xdel);
+        if (rightTop == BLACK || rightTop == vCol || rightBottom == BLACK || rightBottom == vCol) {
+            *xdpointer = 0;
+        }
     }
-    player->x = player->x + *xdel;
-    player->y = player->y + *ydel;
-    return ((*xdel != 0) || (*ydel != 0));
+    player->x = player->x + *xdpointer;
+    player->y = player->y + *ydpointer;
+    return ((*xdpointer != 0) || (*ydpointer != 0));
 }
 
 void moveEnemy(ENEMY* enemy) {
@@ -121,9 +149,11 @@ void moveEnemy(ENEMY* enemy) {
 }
 
 int checkVictory(GameState* state) {
+    if (!state->player->pickupCollected) {
+        return 0;
+    }
     int x = state->player->x;
     int y = state->player->y;
-    u16 vCol = 0x2f46;
     return (checkPixel(y, x + PLAYER_SIZE) == vCol || checkPixel(y + PLAYER_SIZE, x) == vCol
                 || checkPixel(y - 1, x) == vCol || checkPixel(y, x - 1) == vCol);
 }
@@ -138,17 +168,27 @@ int checkDeath(GameState* state) {
     ENEMY* enemies = state->currentLevel->enemies;
     while (index < state->currentLevel->numEnemies && !hasCollided) {
         ENEMY current = *(enemies + index++);
-        int enemyX1 = current.x;
+        //enemyX1 = current.x;
         int enemyX2 = current.x + ENEMY_SIZE - 1;
-        int enemyY1 = current.y;
+        //enemyY1 = current.y;
         int enemyY2 = current.y + ENEMY_SIZE - 1;
 
-        hasCollided = (playerX1 <= enemyX2) && (playerX2 >= enemyX1) && (playerY1 <= enemyY2) && (playerY2 >= enemyY1);
+        hasCollided = (playerX1 <= enemyX2) && (playerX2 >= current.x) && (playerY1 <= enemyY2) && (playerY2 >= current.y);
     }
     if (hasCollided) {
         drawRect(playerY1, playerX1, PLAYER_SIZE, PLAYER_SIZE, WHITE);
     }
     return hasCollided;
+}
+
+int checkPickupCollision(PLAYER* player, int pickupX1, int pickupY1) {
+    int playerX2 = player->x + PLAYER_SIZE - 1;
+    int playerY2 = player->y + PLAYER_SIZE - 1;
+
+    int pickupX2 = pickupX1 + PICKUP_SIZE - 1;
+    int pickupY2 = pickupY1 + PICKUP_SIZE - 1;
+
+    return (player->x <= pickupX2) && (playerX2 >= pickupX1) && (player->y <= pickupY2) && (playerY2 >= pickupY1);
 }
 
 ENEMY level1E[] = {
@@ -177,7 +217,7 @@ ENEMY level3E[] = {
 
 int numLevels = 3;
 LEVEL levels[] = {
-    {level1, 6, level1E, 14, 14, 1},
-    {level2, 1, level2E, 26, 57, 2},
-    {level3, 8, level3E, 102, 28, 3}
+    {level1, 6, level1E, 0, {0, 0}, 14, 14, 1},
+    {level2, 1, level2E, 0, {0, 0}, 26, 57, 2},
+    {level3, 8, level3E, 0, {0, 0}, 102, 28, 3}
 };
