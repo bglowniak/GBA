@@ -169,8 +169,20 @@ ENEMY level2E[] = {
     {206, 69, 2, LEFT}
 };
 
-int numLevels = 2;
+ENEMY level3E[] = {
+    {55, 57, 1, RIGHT},
+    {85, 69, 1, LEFT},
+    {55, 81, 1, RIGHT},
+    {85, 93, 1, LEFT},
+    {147, 57, 1, RIGHT},
+    {177, 69, 1, LEFT},
+    {147, 81, 1, RIGHT},
+    {177, 93, 1, LEFT}
+};
+
+int numLevels = 3;
 LEVEL levels[] = {
     {level1, 6, level1E, 14, 14, 1},
-    {level2, 1, level2E, 26, 57, 2}
+    {level2, 1, level2E, 26, 57, 2},
+    {level3, 8, level3E, 102, 28, 3}
 };
