@@ -1,3 +1,7 @@
+/**
+ * graphics.c defines the core drawing functions for the game's screens and entities
+ */
+
 //Function Prototypes
 void drawImage3(int r, int c, int width, int height, const u16* image);
 void setPixel(int r, int c, u16 color);

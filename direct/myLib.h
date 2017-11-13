@@ -1,9 +1,11 @@
+/**
+ * myLib contains important definitions and declarations for GBA programming.
+ * Most of this code can be attributed to Bill Leahy, CS 2110 Professor at Georgia Tech.
+ */
+
 #define REG_DISPCTL *(unsigned short *) 0x4000000
 #define MODE3 3
 #define SCANLINECOUNTER *(volatile unsigned short *) 0x4000006
-#define HEIGHT 160
-#define WIDTH 240
-
 #define BG2_ENABLE (1 << 10)
 
 typedef unsigned short u16;
@@ -19,8 +21,6 @@ typedef unsigned int u32;
 //Colors
 #define COLOR(r, g, b) ((r) | (g) << 5 | (b) << 10)
 #define RED COLOR(31, 0, 0)
-#define GREEN COLOR(0, 31, 0)
-#define BLUE COLOR(0, 0, 31)
 #define YELLOW COLOR(31, 31, 0)
 #define WHITE COLOR(31, 31, 31)
 #define BLACK 0
@@ -41,6 +41,7 @@ typedef unsigned int u32;
 #define KEY_DOWN_NOW(key)  (~(BUTTONS) & key)
 #define BUTTONS *(volatile unsigned int *) 0x4000130
 
+//Font data array used for drawing chars
 extern const unsigned char fontdata_6x8[12288];
 
 //Prototypes

@@ -1,18 +1,27 @@
+/**
+ * game.c represents the game's entities and the logic behind their interactions.
+ * Establishes the playability of the game.
+ */
+
 //x represents column
 //y represents row
-typedef struct {
-    int x;
-    int y;
-    int deaths;
-    int pickupCollected;
-} PLAYER;
+//(0, 0) is the top left corner of the screen
 
+//enum definition used for enemy pathing
 enum Direction {
     UP,
     DOWN,
     LEFT,
     RIGHT
 };
+
+//struct definitions for game entities
+typedef struct {
+    int x;
+    int y;
+    int deaths;
+    int pickupCollected;
+} PLAYER;
 
 typedef struct {
     int x;
@@ -42,6 +51,7 @@ typedef struct {
 	LEVEL* currentLevel;
 } GameState;
 
+//function prototypes
 void drawGame(GameState* pointer);
 void processMovements(GameState* state);
 int movePlayer(PLAYER* player, int* xdpointer, int* ydpointer);
