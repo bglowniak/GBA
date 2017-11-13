@@ -65,3 +65,7 @@ extern void drawRect(int r, int c, int width, int height, unsigned short color);
 extern void drawString(int r, int c, char str[], unsigned short color);
 extern unsigned short checkPixel(int r, int c);
 extern void drawTrianglePickup(int r, int c);
+
+//extern variable declarations
+extern int numLevels;
+extern LEVEL levels[];

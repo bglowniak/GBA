@@ -3,8 +3,6 @@
 #include "screens.h"
 #include "characters.h"
 
-extern u16 *videoBuffer;
-
 /**
  * Function that draws an image using DMA.
  */

@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include "levels.h"
 
-extern u16 *videoBuffer;
 u16 vCol = 0x2f46; //the color that represents the victory zone
 
 /**

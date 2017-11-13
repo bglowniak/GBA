@@ -43,6 +43,7 @@ typedef unsigned int u32;
 
 //Font data array used for drawing chars
 extern const unsigned char fontdata_6x8[12288];
+extern u16 *videoBuffer;
 
 //Prototypes
 void waitForVblank();

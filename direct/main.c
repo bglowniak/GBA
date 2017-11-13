@@ -7,10 +7,6 @@
  * main.c is the loop/state machine that runs the game and calls on the game's functions.
  */
 
-extern u16 *videoBuffer;
-extern LEVEL levels[];
-extern int numLevels;
-
 /**
  * Enum that keeps track of the current state of the game.
  * "NODRAW" states are used so that backgrounds aren't constantly redrawn
@@ -55,7 +51,7 @@ int main() {
 			case START_NODRAW:
 				if (!startPressed && KEY_DOWN_NOW(BUTTON_START)) {
 					state = INIT_LEVEL;
-					currentLevel = levels[0];
+					currentLevel = levels[0]; //from game.c
 					//reset player death count in case the user is restarting after having played.
 					player.deaths = 0;
 					startPressed = TRUE;
