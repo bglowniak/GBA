@@ -1,10 +1,10 @@
 # SquareDude
 
-SquareDude is a small scale GameBoy Advance game built for CS 2110 at Georgia Tech. It was built over the course of a week and is designed to emulate the [World's Hardest Game] (https://www.coolmath-games.com/0-worlds-hardest-game).
+SquareDude is a small scale GameBoy Advance game built for CS 2110 at Georgia Tech. It was built over the course of a week and is designed to emulate the [World's Hardest Game](https://www.coolmath-games.com/0-worlds-hardest-game).
 
 All code was written in C and emulated using the VBA emulator.
 
-All images (characters, levels, and screens) were created in Photoshop and ported to GBA-drawable C using [nin10kit] (https://github.com/TricksterGuy/nin10kit).
+All images (characters, levels, and screens) were created in Photoshop and ported to GBA-drawable C using [nin10kit](https://github.com/TricksterGuy/nin10kit).
 
 ## Mechanics
 
