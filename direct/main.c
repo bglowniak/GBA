@@ -31,7 +31,7 @@ int main() {
 	int startPressed = FALSE;
 
 	//used for drawing strings
-	u32 color = WHITE;
+	u32 color;
 	char buffer[12];
 
 	//set up important game variables before running loop
@@ -54,6 +54,7 @@ int main() {
 					currentLevel = levels[0]; //from game.c
 					//reset player death count in case the user is restarting after having played.
 					player.deaths = 0;
+					color = WHITE;
 					startPressed = TRUE;
 				}
 				break;
