@@ -13,7 +13,7 @@ PROGNAME = SquareDude
 # that will be compiled into your program. For example
 # if you have main.c and myLib.c then in the following
 # line you would put main.o and myLib.o
-OFILES = myLib.o graphics.o main.o game.o font.o screens.o characters.o levels.o
+OFILES = $(patsubst %.c, %.o, $(wildcard direct/*.c))
 
 # The header files you have created.
 # This is necessary to determine when to recompile for files.
@@ -69,6 +69,6 @@ med : $(PROGNAME).gba
 .PHONY : clean
 clean :
 	@echo "[CLEAN] Removing all compiled files"
-	@rm -f *.o *.elf *.gba *.d res/*.o res/*.d
+	@rm -f *.o *.elf *.gba *.d res/*.o res/*.d direct/*.o direct/*.d
 
 -include $(CFILES:%.c=%.d)
