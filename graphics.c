@@ -54,8 +54,8 @@ void drawGameOver() {
     drawImage3(0, 0, GAMEOVER_WIDTH, GAMEOVER_HEIGHT, gameOver);
 }
 
-void clearScreen() {
-    drawRect(0, 0, WIDTH, HEIGHT, WHITE);
+void drawVictory() {
+    drawImage3(0, 0, VICTORY_WIDTH, VICTORY_HEIGHT, victory);
 }
 
 void drawSquareDude(int r, int c) {

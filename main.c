@@ -14,7 +14,9 @@ enum GBAState {
 	GAME,
 	NEXT_LEVEL,
 	GAME_OVER,
-	GAME_OVER_NODRAW
+	GAME_OVER_NODRAW,
+	VICTORY,
+	VICTORY_NODRAW
 };
 
 int main() {
@@ -28,6 +30,9 @@ int main() {
 
 	u32 color = WHITE;
 	char buffer[12];
+
+	gameState.player = &player;
+	gameState.currentLevel = &currentLevel;
 
 	while(1) {
 		waitForVblank();
@@ -45,12 +50,9 @@ int main() {
 				}
 				break;
 			case INIT_LEVEL:
-				clearScreen();
 				player.x = currentLevel.playerStartX;
 				player.y = currentLevel.playerStartY;
 				player.pickupCollected = !currentLevel.hasPickup;
-				gameState.player = &player;
-				gameState.currentLevel = &currentLevel;
 
 				drawImage3(0, 0, 240, 160, currentLevel.backgroundImage);
 				sprintf(buffer, "Level %d", currentLevel.levelID);
@@ -95,7 +97,7 @@ int main() {
 				break;
 			case NEXT_LEVEL:
 				if (currentLevel.levelID == numLevels) {
-					state = GAME_OVER;
+					state = VICTORY;
 				} else {
 					currentLevel = levels[currentLevel.levelID];
 					state = INIT_LEVEL;
@@ -106,6 +108,16 @@ int main() {
 				state = GAME_OVER_NODRAW;
 				break;
 			case GAME_OVER_NODRAW:
+				if (!startPressed && KEY_DOWN_NOW(BUTTON_START)) {
+					state = START;
+					startPressed = TRUE;
+				}
+				break;
+			case VICTORY:
+				drawVictory();
+				state = VICTORY_NODRAW;
+				break;
+			case VICTORY_NODRAW:
 				if (!startPressed && KEY_DOWN_NOW(BUTTON_START)) {
 					state = START;
 					startPressed = TRUE;

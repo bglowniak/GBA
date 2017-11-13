@@ -7,7 +7,7 @@ void drawChar(int r, int c, char ch, u16 color);
 void drawString(int r, int c, char str[], u16 color);
 void drawSplashScreen();
 void drawGameOver();
-void clearScreen();
+void drawVictory();
 void drawSquareDude(int r, int c);
 void drawCircleEnemy(int r, int c);
 void drawTrianglePickup(int r, int c);
