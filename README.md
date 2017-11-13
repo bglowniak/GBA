@@ -6,6 +6,8 @@ All code was written in C and emulated using the VBA emulator.
 
 All images (characters, levels, and screens) were created in Photoshop and ported to GBA-drawable C using [nin10kit](https://github.com/TricksterGuy/nin10kit).
 
+Useful resource for rectangular collision detection [here](https://stackoverflow.com/questions/31022269/collision-detection-between-two-rectangles-in-java).
+
 ## Mechanics
 
 As SquareDude, you must navigate through a series of difficult levels for no discernible purpose.
